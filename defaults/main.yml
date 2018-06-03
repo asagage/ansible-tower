@@ -1,0 +1,42 @@
+---
+# defaults file for ansible-tower
+
+# Restore from backup
+perform_restore: false
+# Create backup
+create_backup: false
+# Setup ldap
+configure_ldap: false
+# Perform upgrade
+perform_upgrade: false
+
+tmp_folder: "/tmp"
+tower_version: 3.2.5
+
+# Credentials
+admin_password: "{{ vaulted_admin_password }}"
+rabbitmq_password: "{{ vaulted_rabbitmq_password }}"
+postgresql_password: "{{ vaulted_postgresql_password }}"
+
+# Postgress host
+pg_host: ''
+pg_port: ''
+pg_database: 'awx'
+pg_username: 'awx'
+
+# Rabbitmq host
+rabbitmq_port: 5672
+rabbitmq_vhost: 'tower'
+rabbitmq_username: 'tower'
+rabbitmq_cookie: 'cookie'
+
+# LDAP Configuration. These values need to be overridden
+org_name: 'Organization'
+team_name: 'Team'
+ldap_url: 'ldap://ldap-url:389'
+bind_dn: 'bind_dn'
+bind_password: 'bind_password'
+base_dn: 'OU=base_dn'
+group_search: 'DC=group'
+admins: 'CN=Admins'
+users: 'CN=Users'

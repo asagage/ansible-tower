@@ -1,0 +1,31 @@
+---
+
+- name: Install kerberos packages
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - krb5-workstation
+    - krb5-devel
+    - krb5-libs
+    - gcc
+    - python-pip
+
+- name: Upgrade tower pywinrm to the latest version
+  become: yes
+  pip:
+    name: "pywinrm[kerberos]"
+    virtualenv: /var/lib/awx/venv/ansible
+    virtualenv_command: /var/lib/awx/venv/ansible/bin/activate
+    state: forcereinstall
+
+- name: update krb5.conf file
+  become: yes
+  template:
+    src: krb5.conf.j2
+    dest: /etc/krb5.conf.d/tower.conf
+    mode: 0644
+    group: root
+    owner: root
+  notify: restart_tower

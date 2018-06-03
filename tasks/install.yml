@@ -1,0 +1,25 @@
+---
+- name: Configure credentials
+  template:
+    src: inventory.j2
+    dest: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}/inventory"
+
+- name: Execute installation
+  become: yes
+  shell: "./setup.sh"
+  args:
+    chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+    creates: "/etc/tower/successfully_installed"
+
+- name: Create successfully_installed in tower folder
+  become: yes
+  file:
+    state: touch
+    path: /etc/tower/successfully_installed
+
+- name: Upgrade tower
+  become: yes
+  shell: "./setup.sh"
+  args:
+    chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+  when: perform_upgrade

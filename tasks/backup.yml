@@ -1,0 +1,6 @@
+---
+- name: Perform backup
+  become: yes
+  shell: "./setup.sh -b"
+  args:
+    chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"

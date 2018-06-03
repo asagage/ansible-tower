@@ -1,0 +1,8 @@
+---
+- name: Modify ldap configuration
+  become: true
+  template:
+    src: ldap.py.j2
+    dest: /etc/tower/conf.d/ldap.py
+    group: awx
+  notify: restart_tower

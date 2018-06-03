@@ -1,0 +1,5 @@
+---
+# handlers file for ansible-tower
+- name: restart_tower
+  become: true
+  command: ansible-tower-service restart

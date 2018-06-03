@@ -1,0 +1,6 @@
+---
+tower_package_dependencies:
+  - libsasl2-dev
+  - python-dev
+  - libldap2-dev
+  - libssl-dev

@@ -1,0 +1,39 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# - name: Install Tower dependencies.
+#  package:
+#    name: "{{ item }}"
+#    state: present
+#  with_items: "{{ tower_package_dependencies }}"
+
+- name: Download tower
+  include_tasks: download_tower.yml
+
+- name: Create backup
+  include_tasks: backup.yml
+  when: create_backup
+
+- name: Install ansible tower
+  include_tasks: install.yml
+  when: not restore and not backup
+
+- name: Restore ansible tower db from backup
+  include_tasks: restore.yml
+  when: perform_restore
+
+- name: Ldap configuration
+  include_tasks: ldap.yml
+  when: configure_ldap
+
+- name: Configure ssl
+  include_tasks: ssl.yml
+  when: install_certificate
+
+- name: Kerberos setup
+  include_tasks: kerberos.yml
+  when: configure_kerberos
+
+- name: Ansible upgrade
+  include_tasks: ansible.yml

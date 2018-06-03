@@ -1,0 +1,7 @@
+---
+- name: Download Ansible Tower
+  unarchive:
+    src: http://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-{{ tower_version }}.tar.gz
+    dest: "{{ tmp_folder }}"
+    copy: no
+    creates: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}/setup.sh"

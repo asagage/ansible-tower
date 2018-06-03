@@ -1,0 +1,11 @@
+---
+- name: Install custom ssl certificate
+  become: True
+  copy:
+    src: "vars/vault/certificates/{{ item }}"
+    dest: "/etc/tower/{{ item }}"
+    group: awx
+  with_items:
+    - tower.cert
+    - tower.key
+  notify: restart_tower

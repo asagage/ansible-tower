@@ -1,0 +1,8 @@
+
+---
+- name: Restore Backup
+  become: yes
+  shell: "./setup.sh -r tower-backup-latest.tar.gz"
+  args:
+    chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+  notify: restart_tower

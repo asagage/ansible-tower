@@ -1,0 +1,6 @@
+---
+- name: Upgrade ansible
+  yum:
+    name: ansible
+    state: latest
+  when: ansible_os_family == "RedHat"
