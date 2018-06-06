@@ -17,7 +17,7 @@
 
 - name: Install ansible tower
   include_tasks: install.yml
-  when: backup_name is not defined and not backup
+  when: ansible_tower_install and backup_name is not defined
 
 - name: Restore ansible tower db from backup
   include_tasks: restore.yml

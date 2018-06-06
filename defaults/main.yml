@@ -9,6 +9,8 @@ configure_ldap: false
 perform_upgrade: false
 # Upgrade ansible
 upgrade_ansible: false
+# Install tower
+ansible_tower_install: true
 
 tmp_folder: "/tmp"
 tower_version: 3.2.5
