@@ -1,5 +1,6 @@
 ---
 - name: Upgrade ansible
+  become: yes
   yum:
     name: ansible
     state: latest

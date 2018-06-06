@@ -1,14 +1,14 @@
 ---
 # defaults file for ansible-tower
 
-# Restore from backup
-perform_restore: false
 # Create backup
 create_backup: false
 # Setup ldap
 configure_ldap: false
 # Perform upgrade
 perform_upgrade: false
+# Upgrade ansible
+upgrade_ansible: false
 
 tmp_folder: "/tmp"
 tower_version: 3.2.5
@@ -40,3 +40,7 @@ base_dn: 'OU=base_dn'
 group_search: 'DC=group'
 admins: 'CN=Admins'
 users: 'CN=Users'
+
+# Backup configuration
+resource_group: azure_resource_group_name
+storage_account: azure_storage_account_name

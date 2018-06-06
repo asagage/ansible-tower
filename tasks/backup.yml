@@ -1,6 +1,46 @@
 ---
+- name: Install azure dependency
+  become: yes
+  pip:
+    name: "{{ item }}"
+    state: latest
+    virtualenv: /var/lib/awx/venv/ansible
+    virtualenv_command: /var/lib/awx/venv/ansible/bin/activate
+  with_items:
+    - msrestazure
+    - packaging
+    - ansible[azure]
+
 - name: Perform backup
   become: yes
   shell: "./setup.sh -b"
   args:
     chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+
+- name: Change backup file name from latest to current date
+  become: yes
+  copy:
+    src: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}/tower-backup-latest.tar.gz"
+    dest: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}/tower-backup-{{ ansible_date_time.date }}.tar.gz"
+    remote_src: true
+
+- name: Create container and upload a file
+  azure_rm_storageblob:
+    resource_group: "{{ resource_group }}"
+    storage_account_name: "{{ storage_account }}"
+    container: "{{ env }}-backup"
+    blob: "tower-backup-{{ ansible_date_time.date }}.tar.gz"
+    src: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}/tower-backup-{{ ansible_date_time.date }}.tar.gz"
+
+- name: Find backup files
+  find:
+    paths: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+    patterns: "*.tar.gz"
+  register: backups_to_delete
+
+- name: Remove backup files
+  become: yes
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ backups_to_delete.files }}"

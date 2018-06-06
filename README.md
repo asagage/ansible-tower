@@ -43,6 +43,20 @@ realms:
     kdc1: dc1.yourdomain.com
     kdc2: dc2.yourdomain.com
 ```
+`upgrade_ansible: true` - Do you want to ansible yum package?
+
+`create_backup: true` - Do you want to create backup and upload it to azure storage?
+```
+# Backup configuration
+resource_group: azure_resource_group_name
+storage_account: azure_storage_account_name
+```
+
+`-e backup_name=/tmp/tower-backup.tar.gz` - Do you want to restore from backup?
+```
+ansible-playbook ansible-tower.yml -i "ip,"-e backup_name=/tmp/tower-backup-2018-06-04.tar.gz
+File will be uploaded to insance and tower configuration will be restored from this file
+```
 
 It's recommended you vault the following required vars:
 ```
