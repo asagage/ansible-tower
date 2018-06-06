@@ -17,23 +17,24 @@
 
 - name: Install ansible tower
   include_tasks: install.yml
-  when: not restore and not backup
+  when: ansible_tower_install and backup_name is not defined
 
 - name: Restore ansible tower db from backup
   include_tasks: restore.yml
-  when: perform_restore
+  when: backup_name is defined
 
 - name: Ldap configuration
   include_tasks: ldap.yml
-  when: configure_ldap
+  when: configure_ldap and backup_name is not defined
 
 - name: Configure ssl
   include_tasks: ssl.yml
-  when: install_certificate
+  when: install_certificate and backup_name is not defined
 
 - name: Kerberos setup
   include_tasks: kerberos.yml
-  when: configure_kerberos
+  when: configure_kerberos and backup_name is not defined
 
 - name: Ansible upgrade
   include_tasks: ansible.yml
+  when: upgrade_ansible and backup_name is not defined

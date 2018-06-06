@@ -1,6 +1,6 @@
 ---
 - name: Modify ldap configuration
-  become: true
+  become: yes
   template:
     src: ldap.py.j2
     dest: /etc/tower/conf.d/ldap.py

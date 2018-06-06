@@ -1,8 +1,16 @@
 
 ---
+- name: Upload backup to instance
+  copy:
+    src: "{{ backup_name }}"
+    dest: /tmp/{{ backup_name }}
+
 - name: Restore Backup
   become: yes
-  shell: "./setup.sh -r tower-backup-latest.tar.gz"
+  shell: "./setup.sh -e 'restore_backup_file=/tmp/{{ backup_name }}' -r"
   args:
     chdir: "{{ tmp_folder }}/ansible-tower-setup-{{ tower_version }}"
+    executable: /bin/bash
+  environment:
+    PATH: "{{ ansible_env.PATH}}:/sbin:/usr/sbin"
   notify: restart_tower
