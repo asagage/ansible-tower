@@ -87,6 +87,5 @@ MIT
 Author Information
 ------------------
 This project is developed and maintained by:
-https://github.com/infectsoldier Maksym Postument
-and
-https://github.com/asagage Asa Gage
+* [Maksym Postument](https://github.com/infectsoldier) 
+* [Asa Gage](https://github.com/asagage)
