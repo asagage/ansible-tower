@@ -43,7 +43,7 @@ realms:
     kdc1: dc1.yourdomain.com
     kdc2: dc2.yourdomain.com
 ```
-`upgrade_ansible: true` - Do you want to ansible yum package?
+`upgrade_ansible: true` - Do you want to upgrade ansible yum package?
 
 `create_backup: true` - Do you want to create backup and upload it to azure storage?
 ```
